@@ -1,0 +1,25 @@
+echo "------  ------"
+echo "-"
+echo "-"
+echo "-"
+
+echo "The value of MY_VARIABLE is: $MY_VARIABLE"
+
+
+echo "------ fetching cached layers ------"
+echo "/"
+echo "/"
+echo "/"
+curl -X GET http://geoserver:8080/geoserver/gwc/rest/layers -H  "accept: application/json" -H  "content-type: application/json"
+echo "/"
+echo "/"
+echo "/"
+
+echo "/"
+echo "/"
+echo "/"
+echo "---- modifying roads ----"
+echo "/"
+echo "/"
+echo "/"
+curl -X PUT http://geoserver:8080/geoserver/gwc/rest/layers/qmaps%3Aaus_roads_with_vertices -H  "accept: application/json" -H  "content-type: application/xml" -d "<GeoServerLayer>    <enabled>true</enabled>        <name>qmaps:aus_roads_with_vertices</name>        <mimeFormats>            <string>image/png</string>        </mimeFormats>    <gridSubsets><gridSubset> <gridSetName>EPSG:4326</gridSetName> <extent>   <coords>     <double>113.07390026940892</double>     <double>-43.79159844705773</double>     <double>168.4564299240678</double>     <double>-12.664860648327975</double>   </coords> </extent>    <zoomStart>0</zoomStart>    <zoomStop>20</zoomStop>    <minCachedLevel>1</minCachedLevel>    <maxCachedLevel>21</maxCachedLevel></gridSubset></gridSubsets><metaWidthHeight>    <int>4</int>    <int>4</int>  </metaWidthHeight><autoCacheStyles>true</autoCacheStyles></GeoServerLayer>"

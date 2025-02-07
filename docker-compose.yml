@@ -1,0 +1,78 @@
+services:
+  frontend: 
+    build: 
+      context: .
+    ports:
+      - 5173:5173
+    container_name: frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /frontend
+          ignore:
+            - node_modules
+  postgres:
+    image: postgis/postgis
+    build:
+      context: ./postgres
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    shm_size: 2g
+    environment:
+      POSTGRES_DB: gisdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+  geoserver:
+    image: geosolutionsit/geoserver
+    build: 
+      context: ./geoserver
+    container_name: geoserver
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMIN_PASSWORD=geoserver
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "arg"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  api:
+    build: 
+      context: ./api
+    depends_on:
+      postgres:
+        condition: service_healthy #Don't start this container until postgres is booted
+    ports:
+      - 3002:3002
+    container_name: api
+
+  wait_for_geoserver:
+    image:  bitnami/os-shell:latest 
+    container_name: geo-rest
+    # depends_on:
+    #   geoserver:
+    #     condition: service_healthy
+    volumes:
+      - ./bounding/scripts:/scripts  # Mount the script directory into the container
+    environment:
+      MY_VARIABLE: "default value"
+    command: ["/bin/sh", "-c", "/scripts/test.sh"] 
