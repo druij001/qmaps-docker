@@ -13,7 +13,7 @@ services:
           ignore:
             - node_modules
   postgres:
-    image: postgis/postgis
+    image: postgres:17
     build:
       context: ./postgres
     restart: always
@@ -44,9 +44,9 @@ services:
       - "8080:8080"
     environment:
       - ADMIN_PASSWORD=geoserver
-    # depends_on:
-    #   postgres:
-    #     condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "arg"]
       interval: 1m30s
@@ -68,11 +68,15 @@ services:
   wait_for_geoserver:
     image:  bitnami/os-shell:latest 
     container_name: geo-rest
-    # depends_on:
-    #   geoserver:
-    #     condition: service_healthy
+    depends_on:
+      geoserver:
+        condition: service_healthy
     volumes:
       - ./bounding/scripts:/scripts  # Mount the script directory into the container
     environment:
-      MY_VARIABLE: "default value"
+      MY_VARIABLE: "geoserver"
+      x1: 115.07390026940892
+      y1: -43.79159844705773
+      x2: 165.4564299240678
+      y2: -10.664860648327975
     command: ["/bin/sh", "-c", "/scripts/test.sh"] 

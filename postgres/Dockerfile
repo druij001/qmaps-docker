@@ -1,10 +1,10 @@
 FROM postgres:17
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-ENV POSTGRES_DB gisdb
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD postgres
+ENV POSTGRES_DB=gisdb
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
 
 
 RUN apt-get update -y

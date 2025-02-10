@@ -32,7 +32,26 @@ async function setupApp() {
         port: 5432,
         host: "postgres",
     });
-    await pgClient.connect();
+
+    const maxAttempts:number = 60;
+    let connected:boolean = false;
+    let attempts:number = 0;
+
+    while(connected==false && attempts<maxAttempts) {
+        try {
+            await pgClient.connect();
+            connected = true;
+        } catch (error) {
+            console.warn("tried to connect and failed. Total tries: ", attempts, "Max Attemps: ", maxAttempts)
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+        }
+
+        if(connected = true) {
+            console.info("Connected successfully!")
+        }
+
+        attempts ++;
+    }
 
 
     //Create a new series
