@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react"
 import { Feature, Map, MapBrowserEvent, MapEvent, View } from "ol"
 import "ol/ol.css"
 import { getInterestPoints, getRoads, handleFetchSeriesFeatures, handleInsertFeature } from "../../BusinessLogic/BusinessLogic"
-import { AdlImageLayer, AusAmenityLayer, AusLineLayer, AusPointLayer, AusPolyLayer, AusRoadLayer, countriesLayer, CustomPointsLayer, CustomPointsLayerSource, populatedPlacesLayer, RouteLayer, VectorRouteSource, VectorRouteLayer } from "../../assets/WmtsLayers"
+import { ESRIWI_AUS, AUS_AMENITIES, PLANET_OSM_LINE, PLANET_OSM_POINT, PLANET_OSM_POLYGON, AUS_ROADS, CustomPointsLayer, CustomPointsLayerSource, VectorRouteSource, VectorRouteLayer } from "../../assets/WmtsLayers"
 import Draw, { DrawEvent } from 'ol/interaction/Draw.js';
 import { Geometry, LineString, Point, Polygon } from "ol/geom"
 import { Type } from "ol/geom/Geometry"
@@ -24,8 +24,8 @@ export default function MapWMTS() {
 
     const [zoomLevel, setZoomLevel] = useState(6);
 
-    const layers: { name: string, z: number, value: any }[] = [AdlImageLayer, countriesLayer, RouteLayer, populatedPlacesLayer, AusPolyLayer, AusLineLayer, AusRoadLayer, AusPointLayer, AusAmenityLayer, CustomPointsLayer, VectorRouteLayer];
-    const [toggledLayers, setToggledLayers] = useState<{ name: string, z: number, value: any }[]>([AusLineLayer, AusRoadLayer, AusAmenityLayer, CustomPointsLayer, VectorRouteLayer]);
+    const layers: { name: string, z: number, value: any }[] = [ESRIWI_AUS, PLANET_OSM_POLYGON, PLANET_OSM_LINE, AUS_ROADS, PLANET_OSM_POINT, AUS_AMENITIES, CustomPointsLayer, VectorRouteLayer];
+    const [toggledLayers, setToggledLayers] = useState<{ name: string, z: number, value: any }[]>([ESRIWI_AUS, PLANET_OSM_LINE, AUS_ROADS, AUS_AMENITIES, CustomPointsLayer, VectorRouteLayer]);
 
     const [selectedRoads, setSelectedRoads] = useState<{ id: number | null; name: string | null; adminLevel: string | null; boundary: string | null; source: number | null; target: number | null; z: string | null }[] | undefined>(undefined);
     const [selectedAmenities, setSelectedAmenities] = useState<{ id: string | null, name: string | null, covered: boolean | null }[] | undefined>(undefined);
@@ -54,15 +54,6 @@ export default function MapWMTS() {
                 zoom: zoomLevel,
             }),
         })
-
-        let wms = RouteLayer.value.getSource();
-        if (wms) {
-            wms.updateParams({
-                'LAYERS': 'qmaps:aus_routes',
-                'viewParams': `source:${selectedRoute.source};target:${selectedRoute.target}`
-            })
-            RouteLayer.value?.setSource(wms);
-        }
 
         map.on("moveend", (e) => onMapMoveEnd(e))
         map.on('click', (e) => onMapClick(e))

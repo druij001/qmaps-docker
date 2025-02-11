@@ -16,6 +16,8 @@ services:
     image: postgres:17
     build:
       context: ./postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql
     restart: always
     container_name: postgres
     ports:
@@ -26,10 +28,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "psql -U postgres -d gisdb -c 'SELECT * FROM gisdb_is_populated()' | grep is_complete ||  exit 1"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 50
     deploy:
       resources:
         limits:
@@ -39,6 +41,8 @@ services:
     image: geosolutionsit/geoserver
     build: 
       context: ./geoserver
+    volumes:
+      - geoserver-data:/geoserver
     container_name: geoserver
     ports:
       - "8080:8080"
@@ -48,11 +52,10 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "arg"]
-      interval: 1m30s
-      timeout: 30s
+      test: ['CMD-SHELL', 'curl -f -X GET http://localhost:8080/geoserver/gwc/rest/layers/qmaps:aus_roads_with_vertices -H  "accept: application/xml" -H  "content-type: application/json" || exit 1']
+      interval: 5s
+      timeout: 5s
       retries: 5
-      start_period: 30s
     restart: unless-stopped
 
   api:
@@ -65,18 +68,20 @@ services:
       - 3002:3002
     container_name: api
 
-  wait_for_geoserver:
+  geoserver_seeder:
     image:  bitnami/os-shell:latest 
-    container_name: geo-rest
+    container_name: geoserver-seeder
     depends_on:
-      geoserver:
+      postgres:
         condition: service_healthy
     volumes:
-      - ./bounding/scripts:/scripts  # Mount the script directory into the container
+      - ./geoserver_seeder/scripts:/scripts  # Mount the script directory into the container
     environment:
-      MY_VARIABLE: "geoserver"
-      x1: 115.07390026940892
-      y1: -43.79159844705773
-      x2: 165.4564299240678
-      y2: -10.664860648327975
-    command: ["/bin/sh", "-c", "/scripts/test.sh"] 
+      x1: 138.222
+      y1: -34.8
+      x2: 138.8050
+      y2: -35
+    command: ["/bin/sh", "-c", "/scripts/seed_geoserver.sh"]
+volumes:
+  postgres-data:
+  geoserver-data:

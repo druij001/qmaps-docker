@@ -1,7 +1,6 @@
 <GeoServerTileLayer>
   <id>LayerInfoImpl-6495e554:194d8449583:14bd</id>
   <enabled>true</enabled>
-  <inMemoryCached>true</inMemoryCached>
   <name>qmaps:ESRIWI_AUS</name>
   <mimeFormats>
     <string>image/png</string>
@@ -17,7 +16,7 @@
           <double>85.05109999999999</double>
         </coords>
       </extent>
-      <zoomStop>7</zoomStop>
+      <zoomStop>3</zoomStop>
     </gridSubset>
   </gridSubsets>
   <metaWidthHeight>

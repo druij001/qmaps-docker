@@ -21,7 +21,7 @@
           <Abstract>A solid blue line with a 1 pixel width</Abstract>
           <LineSymbolizer>
             <Stroke>
-              <CssParameter name="stroke">#0000FF</CssParameter>
+              <CssParameter name="stroke">#DDDDDD</CssParameter>
             </Stroke>
           </LineSymbolizer>
         </Rule>
@@ -29,4 +29,3 @@
     </UserStyle>
   </NamedLayer>
 </StyledLayerDescriptor>
-

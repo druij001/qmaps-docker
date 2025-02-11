@@ -1,25 +1,14 @@
 <GeoServerTileLayer>
-  <id>LayerInfoImpl-6495e554:194d83a5a41:-59f7</id>
+  <id>LayerInfoImpl-6495e554:194d83a5a41:-59f5</id>
   <enabled>true</enabled>
-  <name>qmaps:planet_osm_line</name>
+  <inMemoryCached>true</inMemoryCached>
+  <name>qmaps:planet_osm_point</name>
   <mimeFormats>
     <string>image/png</string>
   </mimeFormats>
   <gridSubsets>
     <gridSubset>
       <gridSetName>EPSG:4326</gridSetName>
-      <extent>
-        <coords>
-          <double>138.1283</double>
-          <double>-35.0</double>
-          <double>138.805</double>
-          <double>-34.8</double>
-        </coords>
-      </extent>
-      <zoomStart>10</zoomStart>
-      <zoomStop>17</zoomStop>
-      <minCachedLevel>10</minCachedLevel>
-      <maxCachedLevel>17</maxCachedLevel>
     </gridSubset>
   </gridSubsets>
   <metaWidthHeight>
@@ -33,7 +22,7 @@
       <key>STYLES</key>
       <defaultValue></defaultValue>
       <availableStyles class="sorted-set"/>
-      <defaultStyle>line</defaultStyle>
+      <defaultStyle>point</defaultStyle>
     </styleParameterFilter>
   </parameterFilters>
   <gutter>0</gutter>

@@ -25,81 +25,9 @@ for (var z = 0; z < zoomLevel; ++z) {
     matrixIds[z] = 'EPSG:4326:' + z;
 }
 
-export const populatedPlacesLayer = {
-    name: "Population areas",
-    z: 10,
-    value: new TileLayer({
-        preload: Infinity,
-        maxZoom: 10,
-        source: new WMTS({
-            url: 'http://localhost:8080/geoserver/gwc/service/wmts?',
-            layer: 'CacheTest:populated_places',
-            matrixSet: "EPSG:4326",
-            format: 'image/png',
-            projection: projection,
-            tileGrid: new WMTSTileGrid({
-                resolutions: resolutions,
-                matrixIds: matrixIds,
-                origin: getTopLeft(projectionExtent),
-            }),
-            //attributions: "@geoserver",
-            style: '',
-            wrapX: true
-        }),
-    })
-};
 
-export const topographyLayer = {
-    name: "Topography",
-    z: 1,
-    value: new TileLayer({
-        preload: Infinity,
-        maxZoom: 8,
-        source: new WMTS({
-            url: 'http://localhost:8080/geoserver/gwc/service/wmts?',
-            layer: 'CacheTest:SR_50M',
-            matrixSet: "EPSG:4326",
-            format: 'image/png',
-            projection: projection,
-            tileGrid: new WMTSTileGrid({
-                resolutions: resolutions,
-                matrixIds: matrixIds,
-                origin: getTopLeft(projectionExtent),
-            }),
-            //attributions: "@geoserver",
-            style: '',
-            wrapX: true
-        }),
-    })
-};
-
-
-export const countriesLayer = {
-    name: "Country borders",
-    z: 1,
-    value: new TileLayer({
-        preload: Infinity,
-        maxZoom: 13,
-        source: new WMTS({
-            url: 'http://localhost:8080/geoserver/gwc/service/wmts?',
-            layer: 'CacheTest:countries',
-            matrixSet: "EPSG:4326",
-            format: 'image/png',
-            projection: projection,
-            tileGrid: new WMTSTileGrid({
-                resolutions: resolutions,
-                matrixIds: matrixIds,
-                origin: getTopLeft(projectionExtent),
-            }),
-            //attributions: "@geoserver",
-            style: '',
-            wrapX: true
-        }),
-    })
-};
-
-export const AusLineLayer = {
-    name: "Paths",
+export const PLANET_OSM_LINE = {
+    name: "planet_osm_line",
     z: 5,
     value: new TileLayer({
         preload: Infinity,
@@ -123,8 +51,8 @@ export const AusLineLayer = {
     })
 };
 
-export const AusPolyLayer = {
-    name: "Buildings",
+export const PLANET_OSM_POLYGON = {
+    name: "planet_osm_polygon",
     z: 3,
     value: new TileLayer({
         preload: Infinity,
@@ -148,8 +76,8 @@ export const AusPolyLayer = {
 };
 
 
-export const AusRoadLayer = {
-    name: "Roads",
+export const AUS_ROADS = {
+    name: "aus_roads",
     z: 6,
     value: new TileLayer({
         preload: Infinity,
@@ -174,8 +102,8 @@ export const AusRoadLayer = {
     })
 };
 
-export const AusPointLayer = {
-    name: "Interest Points",
+export const PLANET_OSM_POINT = {
+    name: "planet_osm_point",
     z: 8,
     value: new TileLayer({
         preload: Infinity,
@@ -199,8 +127,8 @@ export const AusPointLayer = {
 };
 
 
-export const AusAmenityLayer = {
-    name: "Amenities",
+export const AUS_AMENITIES = {
+    name: "aus_amenities",
     z: 9,
     value: new TileLayer({
         preload: Infinity,
@@ -223,8 +151,8 @@ export const AusAmenityLayer = {
     })
 };
 
-export const AdlImageLayer = {
-    name: "Adl Image",
+export const ESRIWI_AUS = {
+    name: "ESRIWI_AUS",
     z: 0,
     value: new TileLayer({
         preload: Infinity,
@@ -247,8 +175,8 @@ export const AdlImageLayer = {
 };
 
 
-export const RouteLayer = {
-    name: "Adl Route",
+export const ROUTE = {
+    name: "aus_routes",
     z: 12,
     value: new TileLayer({
         preload: Infinity,

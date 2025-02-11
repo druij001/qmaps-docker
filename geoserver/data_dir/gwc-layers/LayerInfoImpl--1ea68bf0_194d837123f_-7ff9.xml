@@ -1,7 +1,6 @@
 <GeoServerTileLayer>
   <id>LayerInfoImpl--1ea68bf0:194d837123f:-7ff9</id>
   <enabled>true</enabled>
-  <inMemoryCached>true</inMemoryCached>
   <name>qmaps:aus_roads_with_vertices</name>
   <mimeFormats>
     <string>image/png</string>
@@ -9,6 +8,18 @@
   <gridSubsets>
     <gridSubset>
       <gridSetName>EPSG:4326</gridSetName>
+      <extent>
+        <coords>
+          <double>138.1283</double>
+          <double>-35.0</double>
+          <double>138.805</double>
+          <double>-34.8</double>
+        </coords>
+      </extent>
+      <zoomStart>3</zoomStart>
+      <zoomStop>10</zoomStop>
+      <minCachedLevel>3</minCachedLevel>
+      <maxCachedLevel>10</maxCachedLevel>
     </gridSubset>
   </gridSubsets>
   <metaWidthHeight>

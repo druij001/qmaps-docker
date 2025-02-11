@@ -14,7 +14,7 @@
           <LineSymbolizer>
             <Stroke>
               <CssParameter name="stroke">
-                <ogc:Literal>#AA3333</ogc:Literal>
+                <ogc:Literal>#DDDDDD</ogc:Literal>
               </CssParameter>
               <CssParameter name="stroke-width">
                 <ogc:Literal>2</ogc:Literal>
